@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    fetch('https://<your-site-name>.netlify.app/.netlify/functions/api')
+    fetch('https://snijlijst-api.netlify.app/.netlify/functions/api')
         .then(response => response.json())
         .then(data => {
             console.log(data);
