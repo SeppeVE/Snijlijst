@@ -7,6 +7,9 @@ const port = 3000;
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, '../public')));
 
+// Serve static files from the "html" directory within "public"
+app.use('/html', express.static(path.join(__dirname, '../public/html')));
+
 app.use(bodyParser.json());
 
 app.get('/api', (req, res) => {

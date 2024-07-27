@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', function(event) {
         event.preventDefault();
 
-        const baseUrl = "http://localhost:3000"
+        const baseUrl = "http://localhost:3000" // https://snijlijst-api.netlify.app/.netlify/functions
         const formData = new FormData(form);
         const pageHeight = formData.get('pageHeight');
         const pageWidth = formData.get('pageWidth');
@@ -45,10 +45,15 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
             displayHeight = maxHeight;
             displayWidth = maxHeight * aspectRatio;
-            }          
+            }
+
+            const hFactor = displayHeight / pageHeight;
+            console.log(hFactor)
+            const wFactor = displayWidth / pageWidth;
+            console.log(wFactor)
 
             createRectangle()
-            createLineForms()
+            createLineForms(hFactor, wFactor)
 
             document.getElementById('heightIndicator').innerHTML = `${pageHeight}mm`;
             document.getElementById('widthIndicator').innerHTML = `${pageWidth}mm`;
@@ -86,7 +91,7 @@ function createRectangle(){
     rw.appendChild(r);
 }
 
-function createLineForms(){
+function createLineForms(hFactor, wFactor){
 
     //Height line inputs
     const hl = document.getElementById('heightLines');
@@ -106,7 +111,7 @@ function createLineForms(){
     hli.setAttribute('id', 'heightLinesInput');
     hl.appendChild(hli);
 
-    newInput('height');
+    newInput('height', hFactor);
 
     const hlAdd = document.createElement('button');
     hlAdd.setAttribute('onclick', 'newInput("height")');
@@ -131,7 +136,7 @@ function createLineForms(){
     wli.setAttribute('id', 'widthLinesInput');
     wl.appendChild(wli);
 
-    newInput('width');
+    newInput('width', wFactor);
 
     const wlAdd = document.createElement('button');
     wlAdd.setAttribute('onclick', 'newInput("width")');
@@ -139,7 +144,7 @@ function createLineForms(){
     wl.appendChild(wlAdd);
 }
 
-function newInput(typeOfInput){
+function newInput(typeOfInput, factor){
     const amount = document.getElementById(`${typeOfInput}LinesInput`).childElementCount;
     const li = document.getElementById(`${typeOfInput}LinesInput`);
 
@@ -150,6 +155,7 @@ function newInput(typeOfInput){
 
     const input = document.createElement('input');
     input.setAttribute('type', 'number');
+    input.addEventListener('input', () => drawLine(typeOfInput, input.value, factor));
     extraOption.appendChild(input);
     
     const remove = document.createElement('button');
@@ -161,4 +167,12 @@ function newInput(typeOfInput){
 function removeOption(typeOfInput, amount){
     const option = document.getElementById(`${typeOfInput}Option${amount}`);
     option.remove();
+}
+
+function drawLine(typeOfInput, value, factor){
+    const rectangle = document.getElementById('rectangle');
+    const rectHeight = rectangle.clientHeight;
+    const rectWidth = rectangle.clientWidth;
+    console.log(`Hr will be drawn on ${Math.round(value * factor)}`);
+
 }
