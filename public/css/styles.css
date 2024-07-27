@@ -28,6 +28,7 @@ main {
     align-items: center;
     text-align: center;
     background-color: white;
+    z-index: 0;
 }
 
 #rectHeight {
@@ -44,4 +45,10 @@ main {
 #rectWidth{
     display: flex;
     flex-direction: column;
+}
+
+line {
+    stroke: red;
+    stroke-width: 2;
+    z-index: 10;
 }

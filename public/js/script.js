@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', function(event) {
         event.preventDefault();
 
-        const baseUrl = "https://snijlijst-api.netlify.app/.netlify/functions" // https://snijlijst-api.netlify.app/.netlify/functions
+        const baseUrl = "http://localhost:3000" // https://snijlijst-api.netlify.app/.netlify/functions
         const formData = new FormData(form);
         const pageHeight = formData.get('pageHeight');
         const pageWidth = formData.get('pageWidth');
@@ -86,7 +86,7 @@ function createRectangle(){
     w.setAttribute('id', 'widthIndicator');
     rw.appendChild(w);
     
-    const r = document.createElement('div');
+    const r = document.createElement('svg');
     r.setAttribute('id', 'rectangle');
     rw.appendChild(r);
 }
@@ -155,7 +155,8 @@ function newInput(typeOfInput, factor){
 
     const input = document.createElement('input');
     input.setAttribute('type', 'number');
-    input.addEventListener('input', () => drawLine(typeOfInput, input.value, factor));
+    input.setAttribute('id', `${typeOfInput}Input${amount}`);  // Set the id for the input
+    input.addEventListener('input', () => drawLine(typeOfInput, input.value, factor, input.id)); // Pass the id to drawLine
     extraOption.appendChild(input);
     
     const remove = document.createElement('button');
@@ -164,15 +165,25 @@ function newInput(typeOfInput, factor){
     extraOption.appendChild(remove);
 }
 
+
 function removeOption(typeOfInput, amount){
     const option = document.getElementById(`${typeOfInput}Option${amount}`);
     option.remove();
 }
 
-function drawLine(typeOfInput, value, factor){
+function drawLine(typeOfInput, value, factor, id){
     const rectangle = document.getElementById('rectangle');
     const rectHeight = rectangle.clientHeight;
     const rectWidth = rectangle.clientWidth;
-    console.log(`Hr will be drawn on ${Math.round(value * factor)}`);
+    console.log(`RW: ${rectWidth}, RH: ${rectHeight}`);
+    console.log(`ID: ${id}, Value: ${value}, Factor: ${factor}`);
+    console.log(`${typeOfInput} will be drawn on ${Math.round(value * factor)}`);
+
+    if(typeOfInput == "height"){
+        // Draw horizontal line
+        
+    } else if(typeOfInput == "width"){
+        // Draw vertical line
+    }
 
 }
