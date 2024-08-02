@@ -20,18 +20,14 @@ export function createRectangle(){
     w.setAttribute('id', 'widthIndicator');
     rw.appendChild(w);
     
-    const r = document.createElement('svg');
+    const r = document.createElementNS('http://www.w3.org/2000/svg','svg');
     r.setAttribute('id', 'rectangle');
     rw.appendChild(r);
-
-
-    // let attributes = {"x1": `0`, "y1": `13`, "x2" :`283`, "y2" :`13`, "stroke" :"red"}
-    // const newLine = document.createElement('line');
-    // setAttributes(newLine, attributes);
-    // r.appendChild(newLine);
 }
 
 export function createLineForms(hFactor, wFactor){
+    document.getElementById('inputContainer').style = "display: flex";
+
     // Height line inputs
     const hl = document.getElementById('heightLines');
     hl.innerHTML = '';
@@ -54,6 +50,7 @@ export function createLineForms(hFactor, wFactor){
 
     const hlAdd = document.createElement('button');
     hlAdd.setAttribute('onclick', `newInput("height", ${hFactor})`);
+    hlAdd.setAttribute('class', 'addButtons');
     hlAdd.innerHTML = "&plus;";
     hl.appendChild(hlAdd);
     
@@ -68,7 +65,7 @@ export function createLineForms(hFactor, wFactor){
 
     const wInfo = document.createElement('p');
     wInfo.setAttribute('class', 'lineInfo');
-    wInfo.innerHTML = 'Breedte in mm vanaf de bovenkant.';
+    wInfo.innerHTML = 'Breedte in mm vanaf de zijkant.';
     wl.appendChild(wInfo);
 
     const wli = document.createElement('div');
@@ -79,13 +76,10 @@ export function createLineForms(hFactor, wFactor){
 
     const wlAdd = document.createElement('button');
     wlAdd.setAttribute('onclick', `newInput("width", ${wFactor})`);
+    wlAdd.setAttribute('class', 'addButtons');
     wlAdd.innerHTML = "&plus;";
     wl.appendChild(wlAdd);
+
+    const calculateButton = document.getElementById('calculateList');
+    calculateButton.style.display = "block";
 }
-
-
-function setAttributes(el, attrs) {
-    for(var key in attrs) {
-      el.setAttribute(key, attrs[key]);
-    }
-  }

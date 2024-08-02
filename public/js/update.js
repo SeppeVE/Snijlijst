@@ -25,41 +25,35 @@ export function drawLine(typeOfInput, value, factor, id){
     const rectangle = document.getElementById('rectangle');
     const rectHeight = rectangle.clientHeight;
     const rectWidth = rectangle.clientWidth;
-    console.log(`${typeOfInput} will be drawn on ${Math.round(value * factor)}`);
 
     const pos = Math.round(value * factor)
 
-    let lineId = null;
-    let line = null;
-    let attributes = {};
+    let lineId = `${typeOfInput}Line${id.slice(typeOfInput.length + 5)}`;
+    let line = document.getElementById(`${lineId}`);
 
-    if(typeOfInput == "height"){
-        lineId = `${typeOfInput}Line${id.slice(11)}`;
-        line = document.getElementById(`${lineId}`);
-        attributes = {"x1": "0", "y1": `${pos}`, "x2" :`${rectWidth}`, "y2" :`${pos}`, "stroke" :"red", "stroke-width": "2", "id" :`${lineId}`}
-        console.log(`Attributes are: ${attributes}`)
-
-    } else if(typeOfInput == "width"){
-        lineId = `${typeOfInput}Line${id.slice(10)}`;
-        line = document.getElementById(`${lineId}`);
-        attributes = {"x1": `${pos}`, "y1": `0`, "x2" :`${pos}`, "y2" :`${rectHeight}`, "stroke" :"red", "stroke-width": "2", "id" :`${lineId}`}
-        console.log(`Attributes are: ${attributes}`)
-    }
-
-    if (line == null){
-        const newLine = document.createElement('line');
-        setAttributes(newLine, attributes);
-        rectangle.appendChild(newLine);
-    } else if (line != null){
+    if (line != null){
         line.remove();
-        const newLine = document.createElement('line');
-        setAttributes(newLine, attributes);
-        rectangle.appendChild(newLine);
     }
+    const newLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    
+    if(typeOfInput == "height"){
+        newLine.setAttribute('id',`${lineId}`);
+        newLine.setAttribute('x1',`0`);
+        newLine.setAttribute('y1',`${pos}`);
+        newLine.setAttribute('x2',`${rectWidth}`);
+        newLine.setAttribute('y2',`${pos}`);
+        newLine.setAttribute("stroke", "red");
+        newLine.setAttribute("stroke-width", "1");
+        
+    } else if(typeOfInput == "width"){
+        newLine.setAttribute('id',`${lineId}`);
+        newLine.setAttribute('x1',`${pos}`);
+        newLine.setAttribute('y1','0');
+        newLine.setAttribute('x2',`${pos}`);
+        newLine.setAttribute('y2',`${rectHeight}`);
+        newLine.setAttribute("stroke", "red");
+        newLine.setAttribute("stroke-width", "1");
+    }
+    
+    rectangle.appendChild(newLine);
 }
-
-function setAttributes(el, attrs) {
-    for(var key in attrs) {
-      el.setAttribute(key, attrs[key]);
-    }
-  }
