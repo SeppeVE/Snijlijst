@@ -1,32 +1,32 @@
 import { newInput } from './update.js';
 
-export function createRectangle(){
+export function createRectangle() {
     const mr = document.getElementById('mainRight');
     mr.innerHTML = '';
-    
+
     const rh = document.createElement('div');
     rh.setAttribute('id', 'rectHeight');
     mr.appendChild(rh);
-    
+
     const h = document.createElement('p');
     h.setAttribute('id', 'heightIndicator');
     rh.appendChild(h);
-    
+
     const rw = document.createElement('div');
     rw.setAttribute('id', 'rectWidth');
     rh.appendChild(rw);
-    
+
     const w = document.createElement('p');
     w.setAttribute('id', 'widthIndicator');
     rw.appendChild(w);
-    
-    const r = document.createElementNS('http://www.w3.org/2000/svg','svg');
+
+    const r = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     r.setAttribute('id', 'rectangle');
     rw.appendChild(r);
 }
 
-export function createLineForms(hFactor, wFactor){
-    document.getElementById('inputContainer').style = "display: flex";
+export function createLineForms(hFactor, wFactor) {
+    document.getElementById('inputContainer').style.display = "flex";
 
     // Height line inputs
     const hl = document.getElementById('heightLines');
@@ -49,11 +49,11 @@ export function createLineForms(hFactor, wFactor){
     newInput('height', hFactor);
 
     const hlAdd = document.createElement('button');
-    hlAdd.setAttribute('onclick', `newInput("height", ${hFactor})`);
     hlAdd.setAttribute('class', 'addButtons');
     hlAdd.innerHTML = "&plus;";
+    hlAdd.addEventListener('click', () => newInput('height', hFactor));
     hl.appendChild(hlAdd);
-    
+
     // Width line inputs
     const wl = document.getElementById('widthLines');
     wl.innerHTML = '';
@@ -75,9 +75,9 @@ export function createLineForms(hFactor, wFactor){
     newInput('width', wFactor);
 
     const wlAdd = document.createElement('button');
-    wlAdd.setAttribute('onclick', `newInput("width", ${wFactor})`);
     wlAdd.setAttribute('class', 'addButtons');
     wlAdd.innerHTML = "&plus;";
+    wlAdd.addEventListener('click', () => newInput('width', wFactor));
     wl.appendChild(wlAdd);
 
     const calculateButton = document.getElementById('calculateList');

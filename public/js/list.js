@@ -1,5 +1,13 @@
+function showElement(id) {
+    document.getElementById(id).style.display = "block";
+}
+
+function hideElement(id) {
+    document.getElementById(id).style.display = "none";
+}
+
 export function calculate() {
-    document.getElementById('inputHighError').style.display = "none";
+    hideElement('inputHighError');
     let amountOfHeightLines = document.getElementById("heightLinesInput").childElementCount;
     let amountOfWidthLines = document.getElementById("widthLinesInput").childElementCount;
     const originalHeight = parseInt(document.getElementById('pageHeight').value);
@@ -9,36 +17,36 @@ export function calculate() {
     let widthValues = getValues("width", amountOfWidthLines, originalWidth);
 
     if (heightValues.length < 2 || widthValues.length < 2) {
-        document.getElementById('inputLowError').style.display = "block";
+        showElement('inputLowError');
         return; // Exit the function early if there are not enough lines
     }
 
-    document.getElementById('inputLowError').style.display = "none";
+    hideElement('inputLowError');
 
     let instructions = cuttingList(heightValues.sort((a, b) => a - b), widthValues.sort((a, b) => a - b), originalHeight, originalWidth);
     
-    let mainRight = document.getElementById('mainRight');
-    let ic = document.getElementById('instructionsContainer');
+    const mainRight = document.getElementById('mainRight');
+    const existingContainer = document.getElementById('instructionsContainer');
 
-    if (ic != null) {
-        ic.remove();
+    if (existingContainer) {
+        existingContainer.remove();
     }
 
-    let instructionsContainer = document.createElement('div');
+    const instructionsContainer = document.createElement('div');
     instructionsContainer.setAttribute('id', 'instructionsContainer');
     mainRight.appendChild(instructionsContainer);
 
-    let instructionsTitle = document.createElement('h3');
+    const instructionsTitle = document.createElement('h3');
     instructionsTitle.setAttribute('class', 'lineTitles');
     instructionsTitle.innerHTML = 'Instructies';
     instructionsContainer.appendChild(instructionsTitle);
 
-    for (let i = 0; i < instructions.length; i++) {
-        let nextStep = document.createElement('p');
+    instructions.forEach(instruction => {
+        const nextStep = document.createElement('p');
         nextStep.setAttribute('class', 'instructions');
-        nextStep.innerHTML = `${instructions[i].Instruction} ${instructions[i].Measurement}mm`;
+        nextStep.innerHTML = `${instruction.Instruction} ${instruction.Measurement}mm`;
         instructionsContainer.appendChild(nextStep);
-    }
+    });
 }
 
 export function getValues(typeOfInput, amount, original) {
@@ -49,7 +57,7 @@ export function getValues(typeOfInput, amount, original) {
 
         if (inputValue !== "" && !isNaN(parsedValue)) {
             if (parsedValue > original) {
-                document.getElementById('inputHighError').style.display = "block";
+                showElement('inputHighError');
             } else {
                 values.push(parsedValue);
             }
