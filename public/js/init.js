@@ -1,17 +1,16 @@
-import { createRectangle, createLineForms } from './create.js';
-
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('dimensionsForm');
 
     form.addEventListener('submit', function(event) {
         event.preventDefault();
 
-        const baseUrl = "/pages"; // https://snijlijst-api.netlify.app/.netlify/functions
+        // Use relative path to Vercel's API route
+        const baseUrl = "/api"; 
         const formData = new FormData(form);
         const pageHeight = formData.get('pageHeight');
         const pageWidth = formData.get('pageWidth');
 
-        fetch(`${baseUrl}/api/dimensions`, {
+        fetch(`${baseUrl}/dimensions`, { // Correct endpoint
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
