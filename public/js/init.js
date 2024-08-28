@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', function(event) {
         event.preventDefault();
 
-        const baseUrl = "/api"; // https://snijlijst-api.netlify.app/.netlify/functions
+        const baseUrl = "/pages"; // https://snijlijst-api.netlify.app/.netlify/functions
         const formData = new FormData(form);
         const pageHeight = formData.get('pageHeight');
         const pageWidth = formData.get('pageWidth');
