@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
 
         // Use relative path to Vercel's API route
-        const baseUrl = "/api"; 
+        const baseUrl = "/pages/api"; 
         const formData = new FormData(form);
         const pageHeight = formData.get('pageHeight');
         const pageWidth = formData.get('pageWidth');
