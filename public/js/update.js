@@ -1,12 +1,6 @@
 import { removeOption } from './remove.js';
 
 export function newInput(typeOfInput, factor) {
-
-    if (isNaN(factor) || factor === undefined || factor === null) {
-        console.error(`Invalid factor: ${factor}`);
-        return;
-    }
-
     const amount = document.getElementById(`${typeOfInput}LinesInput`).childElementCount;
     const li = document.getElementById(`${typeOfInput}LinesInput`);
 
@@ -32,17 +26,7 @@ export function drawLine(typeOfInput, value, factor, id) {
     const rectHeight = rectangle.clientHeight;
     const rectWidth = rectangle.clientWidth;
 
-    if (isNaN(value) || isNaN(factor)) {
-        console.error(`Invalid value or factor: value=${value}, factor=${factor}`);
-        return;
-    }
-
     const pos = Math.round(value * factor);
-    
-    if (isNaN(pos)) {
-        console.error(`Calculated position is NaN: ${pos}`);
-        return;
-    }
 
     let lineId = `${typeOfInput}Line${id.slice(typeOfInput.length + 5)}`;
     let line = document.getElementById(lineId);
@@ -50,7 +34,7 @@ export function drawLine(typeOfInput, value, factor, id) {
     if (line != null) {
         line.remove();
     }
-
+    
     const newLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     newLine.setAttribute('id', lineId);
     newLine.setAttribute("stroke", "red");
