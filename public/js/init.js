@@ -4,8 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', function(event) {
         event.preventDefault();
 
-        // Use relative path to Vercel's API route
-        const baseUrl = "/pages/api"; 
+        const baseUrl = "https://snijlijst-api.netlify.app/.netlify/functions"; // https://snijlijst-api.netlify.app/.netlify/functions 
         const formData = new FormData(form);
         const pageHeight = formData.get('pageHeight');
         const pageWidth = formData.get('pageWidth');
