@@ -1,5 +1,3 @@
-import { createRectangle, createLineForms } from './create.js';
-
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('dimensionsForm');
 
@@ -11,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const pageHeight = formData.get('pageHeight');
         const pageWidth = formData.get('pageWidth');
 
-        fetch(`${baseUrl}/api/dimensions`, {
+        fetch(`${baseUrl}/dimensions`, { // Correct endpoint
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
