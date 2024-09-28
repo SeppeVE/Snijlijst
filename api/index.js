@@ -7,9 +7,6 @@ const port = 3000;
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, '../public')));
 
-// Serve static files from the "html" directory within "public"
-app.use('/html', express.static(path.join(__dirname, '../public/html')));
-
 app.use(bodyParser.json());
 
 app.get('/api', (req, res) => {
@@ -20,7 +17,30 @@ app.post('/api/dimensions', (req, res) => {
   const { pageHeight, pageWidth } = req.body;
   const aspectRatio = pageWidth / pageHeight;
 
-  res.json({ aspectRatio });
+  const maxWidth = 400;
+  const maxHeight = 400;
+
+  let displayWidth, displayHeight;
+
+  if (aspectRatio > 1) {
+    displayWidth = maxWidth;
+    displayHeight = maxWidth / aspectRatio;
+  } else {
+    displayHeight = maxHeight;
+    displayWidth = maxHeight * aspectRatio;
+  }
+
+  const hFactor = displayHeight / pageHeight;
+  const wFactor = displayWidth / pageWidth;
+
+  // You could pass these as response or render an HTML template server-side
+  res.json({
+    aspectRatio,
+    displayWidth,
+    displayHeight,
+    hFactor,
+    wFactor,
+  });
 });
 
 app.listen(port, () => {
