@@ -19,7 +19,12 @@ app.get('/api', (req, res) => {
 app.post('/api/dimensions', (req, res) => {
   const { pageHeight, pageWidth } = req.body;
   const aspectRatio = pageWidth / pageHeight;
+  res.json({ aspectRatio });
+});
 
+app.post('/dimensions', (req, res) => {
+  const { pageHeight, pageWidth } = req.body;
+  const aspectRatio = pageWidth / pageHeight;
   res.json({ aspectRatio });
 });
 
